@@ -1,0 +1,102 @@
+{% comment %} {% include 'include.html' %}
+{% include 'navbar.html' %}
+{% block body %}
+<h1 class="text-center">ABOUT</h1>
+<p class="text-justify" id="about-p">The main motive of this website is to provide a relaible service to our users with guranteed privacy. This website holds the detials of the patient to book their appointment with the doctors and can view their previous appointments, prescriptions,
+    reports etc.</p>
+<p class="text-justify" id="about-p1">The patient can view the doctors of their specialisation, so that they can book an appointment with the respective doctor of their intrest. The doctor can view all the details of the appointments so that he can gives the prescirption for the patients.
+    The prescription detials are also saved so that whenever the patient again visits to show the previous treatment taken.</p>
+<p class="text-justify" id="about-p-1">The Receptionist in the organisation will handle the outpatients comming to the hospital and maintaint the payments for the consultation through offline.The Admin can add new Doctors, Receptionists, view all the appointments, Delete Doctors account,
+    view the prescriptions given to the patients by doctors.&nbsp;</p>
+<div class="scroll-top-wrapper"><span class="scroll-top-inner"><i class="fa fa-arrow-circle-up"></i></span></div>
+{% endblock %} {% endcomment %}
+
+
+
+{% include 'include.html' %}
+{% include 'navbar.html' %}
+{% block body %}
+<style>
+    .about-container {
+        padding: 40px;
+        background-color: #f8f9fa; /* Light gray background */
+    }
+
+    .about-heading {
+        color: #007bff; /* Primary blue */
+        text-align: center;
+        margin-bottom: 30px;
+        font-weight: bold;
+    }
+
+    .about-paragraph {
+        color: #495057; /* Dark gray text */
+        text-align: justify;
+        line-height: 1.8;
+        margin-bottom: 20px;
+        padding: 20px;
+        background-color: #fff; /* White background for paragraphs */
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        border-left: 5px solid #007bff; /* Accent border */
+    }
+
+    .about-paragraph strong {
+        color: #007bff; /* Highlight important words */
+        font-weight: bold;
+    }
+
+    .scroll-top-wrapper {
+        position: fixed;
+        opacity: 0;
+        visibility: hidden;
+        overflow: hidden;
+        text-align: center;
+        z-index: 99999;
+        background-color: #007bff;
+        color: #fff;
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        border-radius: 50%;
+        bottom: 20px;
+        right: 20px;
+        cursor: pointer;
+        transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+    }
+
+    .scroll-top-wrapper:hover {
+        background-color: #0056b3;
+    }
+
+    .scroll-top-inner {
+        display: inline-block;
+    }
+
+    .scroll-top-inner i {
+        font-size: 1.5rem;
+    }
+</style>
+
+<div class="about-container">
+    <h1 class="about-heading">About Our Hospital System</h1>
+    <p class="about-paragraph">
+        At the heart of our mission is a commitment to providing a <strong>reliable</strong> and <strong>secure</strong> healthcare platform. We understand the importance of your privacy and have implemented robust measures to safeguard your personal and medical information. This website serves as a central hub for patients to effortlessly <strong>book appointments</strong> with our dedicated doctors and conveniently access their healthcare records, including past consultations, <strong>prescriptions</strong>, and important <strong>reports</strong>.
+    </p>
+    <p class="about-paragraph">
+        We empower patients by allowing them to easily browse doctors based on their specific <strong>specializations</strong>. This ensures that you can connect with the right medical professional for your needs, streamlining the appointment booking process. For our doctors, the platform provides a comprehensive overview of their scheduled appointments, facilitating efficient patient management and the ability to create and store <strong>prescriptions</strong>. This historical record of treatments ensures continuity of care during subsequent visits.
+    </p>
+    <p class="about-paragraph">
+        Our system also caters to the operational needs of the hospital. <strong>Receptionists</strong> play a crucial role in managing outpatient flow and handling consultation payments offline, ensuring a smooth administrative process. Meanwhile, the <strong>Admin</strong> enjoys comprehensive control over the system, with the ability to add new medical and administrative staff (Doctors and Receptionists), oversee all appointment schedules, manage doctor accounts, and review patient prescriptions, ensuring the overall efficiency and integrity of the platform.
+    </p>
+    <p class="about-paragraph">
+        Beyond the core functionalities, our vision extends to fostering a stronger connection between patients and healthcare providers. We believe in leveraging technology to make healthcare more accessible, transparent, and patient-centric. Future developments may include features like secure messaging with doctors, online payment options, and integration with wearable health devices, all aimed at enhancing your healthcare journey. Your well-being is our top priority, and we are continuously working to improve our platform to meet your evolving needs.
+    </p>
+</div>
+
+<div class="scroll-top-wrapper">
+    <span class="scroll-top-inner">
+        <i class="fa fa-arrow-circle-up"></i>
+    </span>
+</div>
+{% endblock %}

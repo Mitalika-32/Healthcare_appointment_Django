@@ -1,0 +1,694 @@
+{% comment %} <!DOCTYPE html>
+<html>
+
+<head>
+    {% include 'include.html' %}
+    {% load static %}
+</head>
+
+<body style="background-image: url(&quot;{% static 'img/star-sky.jpg' %}&quot;);">
+    {% include 'adminnav.html' %}
+    <div id="wrapper">
+        {% include 'admin_include.html' %}
+        <div class="page-content-wrapper">
+            <div class="container-fluid"><a class="btn btn-link" role="button" id="menu-toggle" href="#menu-toggle" style="color: white;"><i class="fa fa-bars"></i></a>
+                <h2 class="text-center" style="color: white;">UPCOMING APPOINTMENTS</h2>
+                <div class="text-center" role="tablist" id="accordion-1">
+                    {% for i in upcomming_appointments %}
+                    <ul class = "collapsible popout text-center" data-collapsible = "accordion">
+                        <li class="card">
+                            <div class = "card-header collapsible-header">
+                                <h5 style="color:blue;"><a><i class="fa fa-calendar-check-o"></i>  {{ i.patientname }} appointment with {{ i.doctorname }} on {{i.appointmentdate}}</a></h5>
+                            </div>
+                            <div class = "card-body collapsible-body">
+                                <table align="center" class="card-text" style="font-size: 19px;">
+                                    <tr>
+                                        <td>Doctor Name:</td>
+                                        <td>{{i.doctorname}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Patient Name:</td>
+                                        <td>{{i.patientname}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Appointment Date:</td>
+                                        <td>{{i.appointmentdate}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Appointment Time:</td>
+                                        <td>{{i.appointmenttime}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Symptoms:</td>
+                                        <td>{{i.symptoms}}</td>
+                                    </tr> 
+                                </table>
+                            </div>
+                        </li>
+                    </ul>
+                    {% endfor %}
+                </div>
+                <h2 class="text-center" style="color: white;">PREVIOUS APPIONTMENTS</h2>
+                <div class="text-center" role="tablist" id="accordion-2">
+                    {% for j in previous_appointments %}
+                    <ul class = "collapsible popout text-center" data-collapsible = "accordion">
+                        <li class="card">
+                            <div class = "card-header collapsible-header">
+                                <h5 style="color:blue;"><a><i class="fa fa-calendar-check-o"></i>  {{ j.patientname }} appointment with {{ j.doctorname }} on {{j.appointmentdate}}</a></h5>
+                            </div>
+                            <div class = "card-body collapsible-body">
+                                <table align="center" class="card-text" style="font-size: 19px;">
+                                    <tr>
+                                        <td>Doctor Name:</td>
+                                        <td>{{j.doctorname}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Patient Name:</td>
+                                        <td>{{j.patientname}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Appointment Date:</td>
+                                        <td>{{j.appointmentdate}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Appointment Time:</td>
+                                        <td>{{j.appointmenttime}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Symptoms:</td>
+                                        <td>{{j.symptoms}}</td>
+                                    </tr> 
+                                </table>
+                            </div>
+                        </li>
+                    </ul>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="scroll-top-wrapper"><span class="scroll-top-inner"><i class="fa fa-arrow-circle-up"></i></span></div>
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/back-to-top-scroll.js' %}"></script>
+<script src="{% static 'js/Bold-BS4-Animated-Back-To-Top.js' %}"></script>
+<script src="{% static 'js/bs-init.js' %}"></script>
+<script src="{% static 'js/Sidebar-Menu.js' %}"></script>
+</body>
+
+</html> {% endcomment %}
+{% comment %} 
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% include 'include.html' %}
+    {% load static %}
+    <style>
+        body {
+            background-image: url("{% static 'img/star-sky-darker.jpg' %}"); /* Darker star sky for better contrast */
+            background-size: cover;
+            background-attachment: fixed; /* Keep background fixed during scroll */
+            color: #f8f9fa; /* Light text for dark background */
+        }
+
+        #wrapper {
+            display: flex;
+        }
+
+        .sidebar-wrapper {
+            /* Styles for your sidebar (likely handled by admin_include.html and its CSS) */
+            min-height: 100vh;
+            background-color: #343a40; /* Dark sidebar background */
+            color: #f8f9fa;
+        }
+
+        .page-content-wrapper {
+            flex-grow: 1;
+            padding: 20px;
+        }
+
+        #menu-toggle {
+            background: none;
+            border: none;
+            color: #f8f9fa;
+            font-size: 1.5rem;
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        #menu-toggle:hover {
+            color: #007bff; /* Highlight on hover */
+        }
+
+        .container-fluid {
+            padding-top: 20px;
+        }
+
+        .appointments-heading {
+            color: #007bff; /* Primary blue for headings */
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        .collapsible-list {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background-color: #fff; /* White background */
+            border: 1px solid #000;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .collapsible-header {
+            background-color: #f8f9fa; /* Light background for header */
+            color:rgb(0, 0, 0); /* Blue text for header */
+            padding: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-bottom: 1px solid #ccc; /* Light gray bottom border */
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .collapsible-header:hover {
+            background-color: #e9ecef; /* Slightly darker on hover */
+            color: #0056b3;
+        }
+
+        .collapsible-header a {
+            color: inherit;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+
+        .collapsible-header i {
+            margin-right: 10px;
+            color: #007bff;
+        }
+
+        .collapsible-body {
+            padding: 20px;
+            background-color: #fff; /* White background for body */
+            border-top: 1px solid #ccc;
+        }
+
+        .appointment-details {
+            width: 100%;
+            margin: 0 auto;
+            color: #343a40;
+        }
+
+        .appointment-details td {
+            padding: 8px;
+            font-size: 1rem;
+            text-align: left;
+        }
+
+        .appointment-details td:first-child {
+            font-weight: bold;
+            color:#007bff; /* Light blue for labels */
+        }
+
+        .scroll-top-wrapper {
+            position: fixed;
+            opacity: 0;
+            visibility: hidden;
+            overflow: hidden;
+            text-align: center;
+            z-index: 99999;
+            background-color: #007bff;
+            color: #fff;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            border-radius: 50%;
+            bottom: 20px;
+            right: 20px;
+            cursor: pointer;
+            transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out, background-color 0.2s ease-in-out;
+        }
+
+        .scroll-top-wrapper:hover {
+            background-color: #0056b3;
+        }
+
+        .scroll-top-inner {
+            display: inline-block;
+        }
+
+        .scroll-top-inner i {
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    {% include 'adminnav.html' %}
+    <div id="wrapper">
+        {% include 'admin_include.html' %}
+        <div class="page-content-wrapper">
+            <div class="container-fluid">
+                <a class="btn btn-link" role="button" id="menu-toggle" href="#menu-toggle">
+                    <i class="fa fa-bars"></i>
+                </a>
+                <h2 class="appointments-heading">UPCOMING APPOINTMENTS</h2>
+                <div class="text-center" role="tablist" id="accordion-1">
+                    {% for i in upcomming_appointments %}
+                    <ul class="collapsible-list">
+                        <li class="card">
+                            <div class="collapsible-header">
+                                <a href="#">
+                                    <i class="fa fa-calendar-check-o"></i>
+                                    {{ i.patientname }} appointment with {{ i.doctorname }} on {{i.appointmentdate}}
+                                </a>
+                            </div>
+                            <div class="collapsible-body">
+                                <table align="center" class="appointment-details">
+                                    <tr>
+                                        <td>Doctor Name:</td>
+                                        <td>{{i.doctorname}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Patient Name:</td>
+                                        <td>{{i.patientname}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Appointment Date:</td>
+                                        <td>{{i.appointmentdate}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Appointment Time:</td>
+                                        <td>{{i.appointmenttime}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Symptoms:</td>
+                                        <td>{{i.symptoms}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </li>
+                    </ul>
+                    {% endfor %}
+                </div>
+
+                <h2 class="appointments-heading">PREVIOUS APPOINTMENTS</h2>
+                <div class="text-center" role="tablist" id="accordion-2">
+                    {% for j in previous_appointments %}
+                    <ul class="collapsible-list">
+                        <li class="card">
+                            <div class="collapsible-header">
+                                <a href="#">
+                                    <i class="fa fa-history"></i> {{ j.patientname }} appointment with {{ j.doctorname }} on {{j.appointmentdate}}
+                                </a>
+                            </div>
+                            <div class="collapsible-body">
+                                <table align="center" class="appointment-details">
+                                    <tr>
+                                        <td>Doctor Name:</td>
+                                        <td>{{j.doctorname}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Patient Name:</td>
+                                        <td>{{j.patientname}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Appointment Date:</td>
+                                        <td>{{j.appointmentdate}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Appointment Time:</td>
+                                        <td>{{j.appointmenttime}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Symptoms:</td>
+                                        <td>{{j.symptoms}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Status:</td>
+                                        <td>{{ i.status }}</td>
+                                    </tr>
+                                    {% if i.status == "Pending" %}
+                                    <tr>
+                                        <td>Approve:</td>
+                                        <td><a href="{% url 'approve_appointment' i.id %}" class="btn btn-success" onclick="return confirm('Approve this appointment?')">Approve</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Decline:</td>
+                                        <td><a href="{% url 'decline_appointment' i.id %}" class="btn btn-danger" onclick="return confirm('Decline this appointment?')">Decline</a></td>
+                                    </tr>
+                                    {% endif %}
+                                    
+                                </table>
+                            </div>
+                        </li>
+                    </ul>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="scroll-top-wrapper">
+        <span class="scroll-top-inner">
+            <i class="fa fa-arrow-circle-up"></i>
+        </span>
+    </div>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/back-to-top-scroll.js' %}"></script>
+    <script src="{% static 'js/Bold-BS4-Animated-Back-To-Top.js' %}"></script>
+    <script src="{% static 'js/bs-init.js' %}"></script>
+    <script src="{% static 'js/Sidebar-Menu.js' %}"></script>
+    <script>
+        $(document).ready(function(){
+            $('.collapsible-header').click(function(){
+                $(this).next('.collapsible-body').slideToggle();
+                $(this).toggleClass('open');
+                $('.collapsible-header').not(this).next('.collapsible-body').slideUp();
+                $('.collapsible-header').not(this).removeClass('open');
+            });
+        });
+    </script>
+</body>
+
+</html> {% endcomment %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% include 'include.html' %}
+    {% load static %}
+    <style>
+        body {
+            background-image: url("{% static 'img/star-sky-darker.jpg' %}");
+            background-size: cover;
+            background-attachment: fixed;
+            color: #f8f9fa;
+        }
+
+        #wrapper {
+            display: flex;
+        }
+
+        .sidebar-wrapper {
+            min-height: 100vh;
+            background-color: #343a40;
+            color: #f8f9fa;
+        }
+
+        .page-content-wrapper {
+            flex-grow: 1;
+            padding: 20px;
+        }
+
+        #menu-toggle {
+            background: none;
+            border: none;
+            color: #f8f9fa;
+            font-size: 1.5rem;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+
+        #menu-toggle:hover {
+            color: #007bff;
+        }
+
+        .container-fluid {
+            padding-top: 20px;
+        }
+
+        .appointments-heading {
+            color: #007bff;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        .collapsible-list {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background-color: #fff;
+            border: 1px solid #000;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .collapsible-header {
+            background-color: #f8f9fa;
+            color: rgb(0, 0, 0);
+            padding: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .collapsible-header:hover {
+            background-color: #e9ecef;
+            color: #0056b3;
+        }
+
+        .collapsible-header a {
+            color: inherit;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+
+        .collapsible-header i {
+            margin-right: 10px;
+            color: #007bff;
+        }
+
+        .collapsible-body {
+            padding: 20px;
+            background-color: #fff;
+            border-top: 1px solid #ccc;
+        }
+
+        .appointment-details {
+            width: 100%;
+            margin: 0 auto;
+            color: #343a40;
+        }
+
+        .appointment-details td {
+            padding: 8px;
+            font-size: 1rem;
+            text-align: left;
+        }
+
+        .appointment-details td:first-child {
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .scroll-top-wrapper {
+            position: fixed;
+            opacity: 0;
+            visibility: hidden;
+            text-align: center;
+            z-index: 99999;
+            background-color: #007bff;
+            color: #fff;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            border-radius: 50%;
+            bottom: 20px;
+            right: 20px;
+            cursor: pointer;
+        }
+
+        .scroll-top-wrapper:hover {
+            background-color: #0056b3;
+        }
+
+        .scroll-top-inner i {
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    {% include 'adminnav.html' %}
+    <div id="wrapper">
+        {% include 'admin_include.html' %}
+        <div class="page-content-wrapper">
+            <div class="container-fluid">
+                <a class="btn btn-link" role="button" id="menu-toggle" href="#menu-toggle">
+                    <i class="fa fa-bars"></i>
+                </a>
+                <h2 class="appointments-heading">PENDING APPOINTMENTS</h2>
+                <div class="text-center" role="tablist" id="accordion-1">
+                    {% for i in upcomming_appointments %}
+                    <ul class="collapsible-list">
+                        <li class="card">
+                            <div class="collapsible-header">
+                                <a href="#">
+                                    <i class="fa fa-calendar-check-o"></i>
+                                    {{ i.patientname }} appointment with {{ i.doctorname }} on {{ i.appointmentdate }}
+                                </a>
+                            </div>
+                            <div class="collapsible-body">
+                                <table align="center" class="appointment-details">
+                                    <tr>
+                                        <td>Doctor Name:</td>
+                                        <td>{{ i.doctorname }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Patient Name:</td>
+                                        <td>{{ i.patientname }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Appointment Date:</td>
+                                        <td>{{ i.appointmentdate }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Appointment Time:</td>
+                                        <td>{{ i.appointmenttime }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Symptoms:</td>
+                                        <td>{{ i.symptoms }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Status:</td>
+                                        <td>{{ i.status }}</td>
+                                    </tr>
+                                    {% if i.status == "Pending" %}
+                                    <tr>
+                                        <td>Approve:</td>
+                                        <td><a href="/approve_appointment/{{i.id}}" class="btn btn-success" onclick="return confirm('Approve this appointment?')">Approve</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Decline:</td>
+                                        <td><a href="/decline_appointment/{{i.id}}" class="btn btn-danger" onclick="return confirm('Decline this appointment?')">Decline</a></td>
+                                    </tr>
+                                    {% endif %}
+                                </table>
+                            </div>
+                        </li>
+                    </ul>
+                    {% endfor %}
+                </div>
+
+                <h2 class="appointments-heading">APPROVED APPOINTMENTS</h2>
+                <div class="text-center" role="tablist" id="accordion-2">
+                    {% for j in previous_appointments %}
+                    <ul class="collapsible-list">
+                        <li class="card">
+                            <div class="collapsible-header">
+                                <a href="#">
+                                    <i class="fa fa-history"></i> {{ j.patientname }} appointment with {{ j.doctorname }} on {{ j.appointmentdate }}
+                                </a>
+                            </div>
+                            <div class="collapsible-body">
+                                <table align="center" class="appointment-details">
+                                    <tr>
+                                        <td>Doctor Name:</td>
+                                        <td>{{ j.doctorname }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Patient Name:</td>
+                                        <td>{{ j.patientname }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Appointment Date:</td>
+                                        <td>{{ j.appointmentdate }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Appointment Time:</td>
+                                        <td>{{ j.appointmenttime }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Symptoms:</td>
+                                        <td>{{ j.symptoms }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Status:</td>
+                                        <td>{{ j.status }}</td>
+                                    </tr>
+                                    {% if j.status == "Pending" %}
+                                    <tr>
+                                        <td colspan="2">
+                                            <a href="{% url 'approve_appointment' i.id %}" class="btn btn-success btn-sm" onclick="return confirm('Approve this appointment?')">Approve</a>
+                                            <a href="{% url 'decline_appointment' i.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Decline this appointment?')">Decline</a>
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+                                    
+                                </table>
+                            </div>
+                        </li>
+                    </ul>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="scroll-top-wrapper">
+        <span class="scroll-top-inner">
+            <i class="fa fa-arrow-circle-up"></i>
+        </span>
+    </div>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/back-to-top-scroll.js' %}"></script>
+    <script src="{% static 'js/Bold-BS4-Animated-Back-To-Top.js' %}"></script>
+    <script src="{% static 'js/bs-init.js' %}"></script>
+    <script src="{% static 'js/Sidebar-Menu.js' %}"></script>
+    <script>
+        $(document).ready(function () {
+            $('.collapsible-header').click(function () {
+                $(this).next('.collapsible-body').slideToggle();
+                $(this).toggleClass('open');
+                $('.collapsible-header').not(this).next('.collapsible-body').slideUp();
+                $('.collapsible-header').not(this).removeClass('open');
+            });
+        });
+    </script>
+</body>
+
+</html>
